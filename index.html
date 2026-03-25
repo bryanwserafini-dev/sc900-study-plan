@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SC-900 Study Plan — Bryan</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0b0f1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: #1e2d45;
+    --accent-blue: #3b82f6;
+    --accent-teal: #14b8a6;
+    --accent-amber: #f59e0b;
+    --accent-purple: #8b5cf6;
+    --accent-red: #ef4444;
+    --text: #e2e8f0;
+    --text-muted: #64748b;
+    --text-dim: #94a3b8;
+    --week1: #14b8a6;
+    --week2: #8b5cf6;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* Header */
+  .header {
+    padding: 3rem 2rem 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-teal);
+    border: 1px solid rgba(20,184,166,0.3);
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.15;
+    color: #f1f5f9;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent-blue);
+  }
+
+  .subtitle {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    font-weight: 300;
+    max-width: 540px;
+  }
+
+  /* Stats bar */
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .stat-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--accent-blue);
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+
+  .stat-divider {
+    width: 1px;
+    background: var(--border);
+    align-self: stretch;
+    margin: 0 0.5rem;
+  }
+
+  /* Domain weight bar */
+  .domain-overview {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .domain-overview h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .domain-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .domain-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .domain-bar-label {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    width: 220px;
+    flex-shrink: 0;
+  }
+
+  .domain-bar-track {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .domain-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 1s ease;
+  }
+
+  .domain-bar-pct {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    width: 40px;
+    text-align: right;
+  }
+
+  /* Main content */
+  .main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .week-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .week-label:first-child {
+    margin-top: 0;
+  }
+
+  .week-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .week-pill.w1 { background: rgba(20,184,166,0.12); color: var(--week1); border: 1px solid rgba(20,184,166,0.25); }
+  .week-pill.w2 { background: rgba(139,92,246,0.12); color: var(--week2); border: 1px solid rgba(139,92,246,0.25); }
+
+  .week-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: #cbd5e1;
+  }
+
+  /* Day cards */
+  .day-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .day-card:hover {
+    border-color: #2d3f5e;
+  }
+
+  .day-header {
+    display: flex;
+    align-items: stretch;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .day-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #fff;
+    writing-mode: horizontal-tb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.1rem 1rem;
+    min-width: 52px;
+    border-right: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .day-num.w1-color { background: rgba(20,184,166,0.1); color: var(--week1); }
+  .day-num.w2-color { background: rgba(139,92,246,0.1); color: var(--week2); }
+
+  .day-meta {
+    flex: 1;
+    padding: 0.9rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .day-title {
+    font-size: 0.97rem;
+    font-weight: 600;
+    color: #e2e8f0;
+  }
+
+  .day-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+  }
+
+  .tag-domain { background: rgba(59,130,246,0.1); color: #60a5fa; border: 1px solid rgba(59,130,246,0.2); }
+  .tag-time { background: rgba(245,158,11,0.08); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
+  .tag-type { background: rgba(100,116,139,0.1); color: #94a3b8; border: 1px solid rgba(100,116,139,0.2); }
+
+  .day-chevron {
+    display: flex;
+    align-items: center;
+    padding: 0 1.2rem;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    transition: transform 0.2s;
+  }
+
+  .day-card.open .day-chevron {
+    transform: rotate(90deg);
+  }
+
+  .day-body {
+    display: none;
+    border-top: 1px solid var(--border);
+    padding: 1.2rem 1.5rem 1.5rem;
+    background: var(--surface2);
+  }
+
+  .day-card.open .day-body {
+    display: block;
+  }
+
+  /* Session blocks */
+  .sessions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 640px) {
+    .sessions { grid-template-columns: 1fr; }
+    .domain-bar-label { width: 160px; font-size: 0.72rem; }
+  }
+
+  .session {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 0.9rem 1rem;
+  }
+
+  .session-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .session-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    margin-bottom: 0.5rem;
+  }
+
+  .session ul {
+    padding-left: 1rem;
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  /* Resources */
+  .resources-section {
+    margin-top: 0.75rem;
+  }
+
+  .resources-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .resources-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .resource-link {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    text-decoration: none;
+    padding: 0.45rem 0.65rem;
+    border-radius: 5px;
+    background: rgba(59,130,246,0.05);
+    border: 1px solid rgba(59,130,246,0.12);
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .resource-link:hover {
+    background: rgba(59,130,246,0.1);
+    border-color: rgba(59,130,246,0.25);
+  }
+
+  .resource-icon {
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+  }
+
+  .resource-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.08rem;
+  }
+
+  .resource-name {
+    font-size: 0.82rem;
+    color: #93c5fd;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .resource-desc {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+  }
+
+  /* Pro tip */
+  .tip {
+    display: flex;
+    gap: 0.65rem;
+    background: rgba(245,158,11,0.05);
+    border: 1px solid rgba(245,158,11,0.15);
+    border-radius: 6px;
+    padding: 0.65rem 0.9rem;
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    color: #fcd34d;
+  }
+
+  .tip-icon { flex-shrink: 0; }
+
+  /* Pinned notes */
+  .pinned-box {
+    background: rgba(139,92,246,0.05);
+    border: 1px solid rgba(139,92,246,0.18);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    color: #c4b5fd;
+  }
+
+  .pinned-box strong {
+    color: #a78bfa;
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+  }
+
+  /* Footer */
+  .footer {
+    max-width: 960px;
+    margin: 3rem auto 2rem;
+    padding: 1.5rem 2rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">SC-900 · 20-Hour Study Plan</div>
+  <h1>Microsoft <em>Security, Compliance</em><br>&amp; Identity Fundamentals</h1>
+  <p class="subtitle">A 14-day, 20-hour structured plan built for your CC + Security+ background — heavy on Microsoft-specific tooling, light on security fundamentals you already own.</p>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <span class="stat-val">14</span>
+    <span class="stat-label">Study Days</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <span class="stat-val">20h</span>
+    <span class="stat-label">Total Hours</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <span class="stat-val">1–2h</span>
+    <span class="stat-label">Daily Commitment</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <span class="stat-val">700</span>
+    <span class="stat-label">Passing Score</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <span class="stat-val">$99</span>
+    <span class="stat-label">Exam Fee (USD)</span>
+  </div>
+</div>
+
+<div class="domain-overview">
+  <h3>Exam Domain Weights — Where Your Time Goes</h3>
+  <div class="domain-bars">
+    <div class="domain-bar-row">
+      <div class="domain-bar-label">Microsoft Security Solutions</div>
+      <div class="domain-bar-track"><div class="domain-bar-fill" style="width:37.5%;background:var(--accent-blue);"></div></div>
+      <div class="domain-bar-pct">35–40%</div>
+    </div>
+    <div class="domain-bar-row">
+      <div class="domain-bar-label">Microsoft Entra (IAM)</div>
+      <div class="domain-bar-track"><div class="domain-bar-fill" style="width:27.5%;background:var(--accent-teal);"></div></div>
+      <div class="domain-bar-pct">25–30%</div>
+    </div>
+    <div class="domain-bar-row">
+      <div class="domain-bar-label">Microsoft Compliance Solutions</div>
+      <div class="domain-bar-track"><div class="domain-bar-fill" style="width:22.5%;background:var(--accent-purple);"></div></div>
+      <div class="domain-bar-pct">20–25%</div>
+    </div>
+    <div class="domain-bar-row">
+      <div class="domain-bar-label">Security, Compliance &amp; Identity Concepts</div>
+      <div class="domain-bar-track"><div class="domain-bar-fill" style="width:12.5%;background:var(--accent-amber);"></div></div>
+      <div class="domain-bar-pct">10–15%</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="pinned-box">
+    <strong>📌 Your Advantage — Read Before You Begin</strong>
+    Your CC and Security+ mean Domains 1 concepts (Zero Trust, CIA Triad, encryption, authentication types) are already familiar territory. Treat those days as a <em>Microsoft-flavored vocabulary refresh</em>, not from-scratch learning. Shift your energy to Domains 2–4 where Microsoft's specific product ecosystem (Entra, Defender, Purview, Sentinel) is the actual challenge. You don't need to configure anything — this exam asks "what is it and why would you use it?"
+  </div>
+
+  <!-- WEEK 1 -->
+  <div class="week-label">
+    <div class="week-pill w1">Week 1</div>
+    <div class="week-title">Build the Foundation — Concepts &amp; Identity</div>
+  </div>
+
+  <!-- Day 1 -->
+  <div class="day-card" onclick="toggle(this)">
+    <div class="day-header">
+      <div class="day-num w1-color">D1</div>
+      <div class="day-meta">
+        <div class="day-title">Orientation &amp; Security Fundamentals (Microsoft Flavor)</div>
+        <div class="day-tags">
+          <span class="tag tag-domain">Domain 1: Concepts</span>
+          <span class="tag tag-time">1.5 hrs</span>
+          <span class="tag tag-type">Learn + Notes</span>
+        </div>
+      </div>
+      <div class="day-chevron">▶</div>
+    </div>
+    <div class="day-body">
+      <div class="sessions">
+        <div class="session">
+          <div class="session-label">Session A · 45 min</div>
+          <div class="session-title">Exam Orientation &amp; Shared Responsibility</div>
+          <ul>
+            <li>Review official SC-900 Study Guide PDF (skim all 4 domains, note weights)</li>
+            <li>Shared responsibility model across IaaS / PaaS / SaaS</li>
+            <li>Defense in depth — Microsoft's layered model</li>
+            <li>CIA Triad in Microsoft's framing</li>
+          </ul>
+        </div>
+        <div class="session">
+          <div class="session-label">Session B · 45 min</div>
+          <div class="session-title">Zero Trust &amp; Microsoft's Implementation</div>
+          <ul>
+            <li>Zero Trust principles: Verify explicitly, least privilege, assume breach</li>
+            <li>How Microsoft Entra / Defender / Purview each embody Zero Trust</li>
+            <li>Regulatory compliance concepts: GDPR, HIPAA framing (high level)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="resources-section">
+        <div class="resources-label">🔗 Resources</div>
+        <div class="resources-list">
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/training/paths/describe-concepts-of-security-compliance-identity/" target="_blank">
+            <div class="resource-icon">📘</div>
+            <div class="resource-text">
+              <div class="resource-name">Microsoft Learn — Part 1: Intro to Security, Compliance & Identity Concepts</div>
+              <div class="resource-desc">FREE · Official Microsoft learning path module — 45–60 min · Covers all Domain 1 topics</div>
+            </div>
+          </a>
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/sc-900" target="_blank">
+            <div class="resource-icon">📋</div>
+            <div class="resource-text">
+              <div class="resource-name">Official SC-900 Study Guide (Microsoft Learn)</div>
+              <div class="resource-desc">FREE · Bookmark and skim today — your north star for every topic on the exam</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">💡</div>
+        <div>You know Zero Trust from Security+ — today is about learning how Microsoft <em>brands and applies</em> it. Focus on the Microsoft-specific vocabulary, not the concept itself.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 2 -->
+  <div class="day-card" onclick="toggle(this)">
+    <div class="day-header">
+      <div class="day-num w1-color">D2</div>
+      <div class="day-meta">
+        <div class="day-title">Identity Concepts &amp; Microsoft Entra ID Intro</div>
+        <div class="day-tags">
+          <span class="tag tag-domain">Domain 2: Microsoft Entra</span>
+          <span class="tag tag-time">1.5 hrs</span>
+          <span class="tag tag-type">Learn + Notes</span>
+        </div>
+      </div>
+      <div class="day-chevron">▶</div>
+    </div>
+    <div class="day-body">
+      <div class="sessions">
+        <div class="session">
+          <div class="session-label">Session A · 45 min</div>
+          <div class="session-title">Identity as the Control Plane</div>
+          <ul>
+            <li>Identity providers, directory services, federation</li>
+            <li>Authentication vs. authorization — Microsoft's framing</li>
+            <li>Modern authentication: OAuth 2.0, OpenID Connect, SAML</li>
+            <li>Microsoft Entra ID: what it is, what it replaced (Azure AD)</li>
+          </ul>
+        </div>
+        <div class="session">
+          <div class="session-label">Session B · 45 min</div>
+          <div class="session-title">Entra ID Core Capabilities</div>
+          <ul>
+            <li>Types of identities: users, workload identities, devices, external</li>
+            <li>Hybrid identity: Microsoft Entra Connect, cloud sync</li>
+            <li>External identities: B2B, B2C</li>
+            <li>Entra ID vs. Active Directory (on-prem) — know the differences</li>
+          </ul>
+        </div>
+      </div>
+      <div class="resources-section">
+        <div class="resources-label">🔗 Resources</div>
+        <div class="resources-list">
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/training/paths/describe-capabilities-of-microsoft-identity-access/" target="_blank">
+            <div class="resource-icon">📘</div>
+            <div class="resource-text">
+              <div class="resource-name">Microsoft Learn — Part 2: Capabilities of Microsoft Entra</div>
+              <div class="resource-desc">FREE · Official path — start here for Entra ID fundamentals</div>
+            </div>
+          </a>
+          <a class="resource-link" href="https://www.youtube.com/watch?v=Jd3IzN9x7K8" target="_blank">
+            <div class="resource-icon">▶️</div>
+            <div class="resource-text">
+              <div class="resource-name">John Savill's SC-900 Study Cram (YouTube)</div>
+              <div class="resource-desc">FREE · ~3 hr cram session — excellent for the Entra section; watch relevant timestamps</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 3 -->
+  <div class="day-card" onclick="toggle(this)">
+    <div class="day-header">
+      <div class="day-num w1-color">D3</div>
+      <div class="day-meta">
+        <div class="day-title">Authentication Methods, MFA &amp; Conditional Access</div>
+        <div class="day-tags">
+          <span class="tag tag-domain">Domain 2: Microsoft Entra</span>
+          <span class="tag tag-time">1.5 hrs</span>
+          <span class="tag tag-type">Learn + Flashcards</span>
+        </div>
+      </div>
+      <div class="day-chevron">▶</div>
+    </div>
+    <div class="day-body">
+      <div class="sessions">
+        <div class="session">
+          <div class="session-label">Session A · 45 min</div>
+          <div class="session-title">Authentication Methods in Entra</div>
+          <ul>
+            <li>Password hash sync, pass-through authentication, federation</li>
+            <li>Multi-Factor Authentication (MFA) methods in Entra</li>
+            <li>SSPR (Self-Service Password Reset)</li>
+            <li>Passwordless: Windows Hello, FIDO2, Authenticator app</li>
+          </ul>
+        </div>
+        <div class="session">
+          <div class="session-label">Session B · 45 min</div>
+          <div class="session-title">Conditional Access &amp; Identity Protection</div>
+          <ul>
+            <li>What Conditional Access is and why it exists</li>
+            <li>Signals → Decisions → Enforcement model</li>
+            <li>Named locations, device compliance, sign-in risk</li>
+            <li>Microsoft Entra Identity Protection: risk-based policies</li>
+          </ul>
+        </div>
+      </div>
+      <div class="resources-section">
+        <div class="resources-label">🔗 Resources</div>
+        <div class="resources-list">
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/training/paths/describe-capabilities-of-microsoft-identity-access/" target="_blank">
+            <div class="resource-icon">📘</div>
+            <div class="resource-text">
+              <div class="resource-name">Microsoft Learn — Entra Auth Methods & Conditional Access modules</div>
+              <div class="resource-desc">FREE · Continue the Part 2 path from Day 2</div>
+            </div>
+          </a>
+          <a class="resource-link" href="https://www.youtube.com/@NTFAQGuy" target="_blank">
+            <div class="resource-icon">▶️</div>
+            <div class="resource-text">
+              <div class="resource-name">Andy Malone MVP — SC-900 YouTube series</div>
+              <div class="resource-desc">FREE · Clear, short videos covering individual SC-900 topics including Conditional Access</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">💡</div>
+        <div>Make a simple flashcard set for authentication methods — the exam loves to test whether you can match a scenario to the right method (e.g., "user in a remote location needs passwordless login").</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 4 -->
+  <div class="day-card" onclick="toggle(this)">
+    <div class="day-header">
+      <div class="day-num w1-color">D4</div>
+      <div class="day-meta">
+        <div class="day-title">Access Management, Governance &amp; Entra Permissions</div>
+        <div class="day-tags">
+          <span class="tag tag-domain">Domain 2: Microsoft Entra</span>
+          <span class="tag tag-time">1.5 hrs</span>
+          <span class="tag tag-type">Learn + Review</span>
+        </div>
+      </div>
+      <div class="day-chevron">▶</div>
+    </div>
+    <div class="day-body">
+      <div class="sessions">
+        <div class="session">
+          <div class="session-label">Session A · 45 min</div>
+          <div class="session-title">RBAC &amp; Role Management</div>
+          <ul>
+            <li>Azure RBAC vs. Entra ID roles — key distinction!</li>
+            <li>Built-in vs. custom roles</li>
+            <li>Privileged Identity Management (PIM): just-in-time access</li>
+            <li>Entitlement management and access packages</li>
+          </ul>
+        </div>
+        <div class="session">
+          <div class="session-label">Session B · 45 min</div>
+          <div class="session-title">Identity Governance</div>
+          <ul>
+            <li>Access reviews — what they are and why</li>
+            <li>Lifecycle workflows</li>
+            <li>Microsoft Entra Permissions Management (CIEM)</li>
+            <li>Microsoft Entra Verified ID (decentralized identity)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="resources-section">
+        <div class="resources-label">🔗 Resources</div>
+        <div class="resources-list">
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/training/paths/describe-capabilities-of-microsoft-identity-access/" target="_blank">
+            <div class="resource-icon">📘</div>
+            <div class="resource-text">
+              <div class="resource-name">Microsoft Learn — Identity Governance modules (Part 2, continued)</div>
+              <div class="resource-desc">FREE · Complete the remaining modules in the Entra learning path</div>
+            </div>
+          </a>
+          <a class="resource-link" href="https://www.udemy.com/course/sc900-azure/" target="_blank">
+            <div class="resource-icon">🎬</div>
+            <div class="resource-text">
+              <div class="resource-name">Scott Duffy — SC-900 on Udemy (IAM sections)</div>
+              <div class="resource-desc">PAID ~$15 on sale · Top-rated, concise, well-structured; use for reinforcement</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 5 -->
+  <div class="day-card" onclick="toggle(this)">
+    <div class="day-header">
+      <div class="day-num w1-color">D5</div>
+      <div class="day-meta">
+        <div class="day-title">Azure Security Fundamentals — Infrastructure &amp; Network</div>
+        <div class="day-tags">
+          <span class="tag tag-domain">Domain 3: Security Solutions</span>
+          <span class="tag tag-time">1.5 hrs</span>
+          <span class="tag tag-type">Learn + Notes</span>
+        </div>
+      </div>
+      <div class="day-chevron">▶</div>
+    </div>
+    <div class="day-body">
+      <div class="sessions">
+        <div class="session">
+          <div class="session-label">Session A · 45 min</div>
+          <div class="session-title">Azure Network Security &amp; Core Services</div>
+          <ul>
+            <li>Azure DDoS Protection (Basic vs. Standard)</li>
+            <li>Azure Firewall — what it does vs. NSG (Network Security Groups)</li>
+            <li>Azure Web Application Firewall (WAF)</li>
+            <li>Azure Bastion and just-in-time VM access</li>
+          </ul>
+        </div>
+        <div class="session">
+          <div class="session-label">Session B · 45 min</div>
+          <div class="session-title">Key Vault, Defender for Cloud Intro</div>
+          <ul>
+            <li>Azure Key Vault: secrets, keys, certificates management</li>
+            <li>Microsoft Defender for Cloud — overview and purpose</li>
+            <li>Secure Score concept</li>
+            <li>Cloud Security Posture Management (CSPM) concept</li>
+          </ul>
+        </div>
+      </div>
+      <div class="resources-section">
+        <div class="resources-label">🔗 Resources</div>
+        <div class="resources-list">
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/training/paths/describe-capabilities-of-microsoft-security-solutions/" target="_blank">
+            <div class="resource-icon">📘</div>
+            <div class="resource-text">
+              <div class="resource-name">Microsoft Learn — Part 3: Capabilities of Microsoft Security Solutions</div>
+              <div class="resource-desc">FREE · Begin this path today — it maps to the exam's heaviest domain (35–40%)</div>
+            </div>
+          </a>
+          <a class="resource-link" href="https://www.youtube.com/watch?v=Jd3IzN9x7K8" target="_blank">
+            <div class="resource-icon">▶️</div>
+            <div class="resource-text">
+              <div class="resource-name">John Savill's SC-900 Master Class (YouTube)</div>
+              <div class="resource-desc">FREE · Jump to the Azure security section timestamps for this day's topics</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">💡</div>
+        <div>Know the difference between NSG (traffic rules at subnet/NIC level) vs. Azure Firewall (stateful, full-featured, centralized) — classic exam gotcha.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 6 -->
+  <div class="day-card" onclick="toggle(this)">
+    <div class="day-header">
+      <div class="day-num w1-color">D6</div>
+      <div class="day-meta">
+        <div class="day-title">Microsoft Defender XDR Suite — Endpoint, Identity, Office</div>
+        <div class="day-tags">
+          <span class="tag tag-domain">Domain 3: Security Solutions</span>
+          <span class="tag tag-time">1.5 hrs</span>
+          <span class="tag tag-type">Learn + Product Map</span>
+        </div>
+      </div>
+      <div class="day-chevron">▶</div>
+    </div>
+    <div class="day-body">
+      <div class="sessions">
+        <div class="session">
+          <div class="session-label">Session A · 45 min</div>
+          <div class="session-title">Defender XDR Product Family</div>
+          <ul>
+            <li>Defender for Endpoint — EDR for devices</li>
+            <li>Defender for Identity — detects on-prem AD threats</li>
+            <li>Defender for Office 365 — email, links, attachments</li>
+            <li>Defender for Cloud Apps — CASB functionality</li>
+          </ul>
+        </div>
+        <div class="session">
+          <div class="session-label">Session B · 45 min</div>
+          <div class="session-title">Microsoft 365 Defender Portal &amp; XDR Concept</div>
+          <ul>
+            <li>What XDR (Extended Detection & Response) means</li>
+            <li>Microsoft Defender XDR unified portal</li>
+            <li>Incidents, alerts, automated investigation & response (AIR)</li>
+            <li>Microsoft Secure Score (M365 context)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="resources-section">
+        <div class="resources-label">🔗 Resources</div>
+        <div class="resources-list">
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/training/paths/describe-capabilities-of-microsoft-security-solutions/" target="_blank">
+            <div class="resource-icon">📘</div>
+            <div class="resource-text">
+              <div class="resource-name">Microsoft Learn — Security Solutions path (Defender modules)</div>
+              <div class="resource-desc">FREE · Continue from Day 5; focus on Defender XDR modules</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">💡</div>
+        <div>Build a one-page cheat sheet: Product → What it protects → Key capability. Example: "Defender for Identity → On-prem AD users → Detects lateral movement." This is gold for exam day.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 7 -->
+  <div class="day-card" onclick="toggle(this)">
+    <div class="day-header">
+      <div class="day-num w1-color">D7</div>
+      <div class="day-meta">
+        <div class="day-title">Week 1 Review &amp; First Practice Assessment</div>
+        <div class="day-tags">
+          <span class="tag tag-domain">Domains 1–3 Partial</span>
+          <span class="tag tag-time">1.5 hrs</span>
+          <span class="tag tag-type">Review + Practice Test</span>
+        </div>
+      </div>
+      <div class="day-chevron">▶</div>
+    </div>
+    <div class="day-body">
+      <div class="sessions">
+        <div class="session">
+          <div class="session-label">Session A · 45 min</div>
+          <div class="session-title">Consolidate Your Notes</div>
+          <ul>
+            <li>Review all notes from Days 1–6</li>
+            <li>Complete your Defender product map cheat sheet</li>
+            <li>Review any Microsoft Learn module knowledge checks you missed</li>
+            <li>Reread any Domain 2 (Entra) topics that felt fuzzy</li>
+          </ul>
+        </div>
+        <div class="session">
+          <div class="session-label">Session B · 45 min</div>
+          <div class="session-title">Official Practice Assessment (Round 1)</div>
+          <ul>
+            <li>Take the FREE Microsoft official practice assessment</li>
+            <li>Don't skip — read every explanation for every answer</li>
+            <li>Log your wrong answers with topic labels</li>
+            <li>Flag weak areas to revisit in Week 2</li>
+          </ul>
+        </div>
+      </div>
+      <div class="resources-section">
+        <div class="resources-label">🔗 Resources</div>
+        <div class="resources-list">
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/credentials/certifications/security-compliance-and-identity-fundamentals/practice/assessment?assessment-type=practice&assessmentId=11" target="_blank">
+            <div class="resource-icon">🧪</div>
+            <div class="resource-text">
+              <div class="resource-name">Microsoft Official SC-900 Practice Assessment (Free)</div>
+              <div class="resource-desc">FREE · The most accurate indicator of exam readiness — from Microsoft itself</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 2 -->
+  <div class="week-label">
+    <div class="week-pill w2">Week 2</div>
+    <div class="week-title">Go Deep — Sentinel, Compliance &amp; Exam Prep</div>
+  </div>
+
+  <!-- Day 8 -->
+  <div class="day-card" onclick="toggle(this)">
+    <div class="day-header">
+      <div class="day-num w2-color">D8</div>
+      <div class="day-meta">
+        <div class="day-title">Microsoft Sentinel — SIEM &amp; SOAR</div>
+        <div class="day-tags">
+          <span class="tag tag-domain">Domain 3: Security Solutions</span>
+          <span class="tag tag-time">1.5 hrs</span>
+          <span class="tag tag-type">Learn + Notes</span>
+        </div>
+      </div>
+      <div class="day-chevron">▶</div>
+    </div>
+    <div class="day-body">
+      <div class="sessions">
+        <div class="session">
+          <div class="session-label">Session A · 45 min</div>
+          <div class="session-title">SIEM & SOAR Concepts + Sentinel Overview</div>
+          <ul>
+            <li>What SIEM is (log collection, correlation, alerting)</li>
+            <li>What SOAR is (automated response, playbooks)</li>
+            <li>Microsoft Sentinel: cloud-native SIEM + SOAR</li>
+            <li>Data connectors, workbooks, analytics rules</li>
+          </ul>
+        </div>
+        <div class="session">
+          <div class="session-label">Session B · 45 min</div>
+          <div class="session-title">Sentinel Capabilities &amp; Threat Intelligence</div>
+          <ul>
+            <li>Incidents and investigations in Sentinel</li>
+            <li>Automation rules and Logic Apps playbooks</li>
+            <li>Microsoft Defender Threat Intelligence (MDTI)</li>
+            <li>How Sentinel integrates with Defender XDR (unified SOC)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="resources-section">
+        <div class="resources-label">🔗 Resources</div>
+        <div class="resources-list">
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/training/paths/describe-capabilities-of-microsoft-security-solutions/" target="_blank">
+            <div class="resource-icon">📘</div>
+            <div class="resource-text">
+              <div class="resource-name">Microsoft Learn — Sentinel modules in Part 3</div>
+              <div class="resource-desc">FREE · Complete the remaining security solutions modules including Sentinel</div>
+            </div>
+          </a>
+          <a class="resource-link" href="https://www.youtube.com/results?search_query=sc-900+microsoft+sentinel+study" target="_blank">
+            <div class="resource-icon">▶️</div>
+            <div class="resource-text">
+              <div class="resource-name">YouTube — SC-900 Sentinel deep dive videos</div>
+              <div class="resource-desc">FREE · Search "SC-900 Sentinel" for focused 15–20 min explainer videos</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">💡</div>
+        <div>Your Security+ background means SIEM/SOAR concepts aren't new — focus on the <em>Microsoft-specific implementation</em>: what Sentinel calls things, how it integrates, and what distinguishes it from generic SIEM tools.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 9 -->
+  <div class="day-card" onclick="toggle(this)">
+    <div class="day-header">
+      <div class="day-num w2-color">D9</div>
+      <div class="day-meta">
+        <div class="day-title">Microsoft Purview — Compliance &amp; Data Governance</div>
+        <div class="day-tags">
+          <span class="tag tag-domain">Domain 4: Compliance</span>
+          <span class="tag tag-time">1.5 hrs</span>
+          <span class="tag tag-type">Learn + Notes</span>
+        </div>
+      </div>
+      <div class="day-chevron">▶</div>
+    </div>
+    <div class="day-body">
+      <div class="sessions">
+        <div class="session">
+          <div class="session-label">Session A · 45 min</div>
+          <div class="session-title">Microsoft Purview Overview &amp; Compliance Portal</div>
+          <ul>
+            <li>What Microsoft Purview is (compliance + data governance platform)</li>
+            <li>Microsoft Purview Compliance Portal</li>
+            <li>Compliance Manager and Compliance Score</li>
+            <li>Service Trust Portal — where Microsoft publishes audit reports</li>
+          </ul>
+        </div>
+        <div class="session">
+          <div class="session-label">Session B · 45 min</div>
+          <div class="session-title">Information Protection &amp; DLP</div>
+          <ul>
+            <li>Sensitivity labels — what they are, how they work</li>
+            <li>Data Loss Prevention (DLP) policies in Purview</li>
+            <li>Information barriers</li>
+            <li>Retention policies and retention labels</li>
+          </ul>
+        </div>
+      </div>
+      <div class="resources-section">
+        <div class="resources-label">🔗 Resources</div>
+        <div class="resources-list">
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/training/paths/describe-capabilities-of-microsoft-compliance-solutions/" target="_blank">
+            <div class="resource-icon">📘</div>
+            <div class="resource-text">
+              <div class="resource-name">Microsoft Learn — Part 4: Capabilities of Microsoft Compliance Solutions</div>
+              <div class="resource-desc">FREE · Begin this path for all Domain 4 topics (Purview, eDiscovery, audit)</div>
+            </div>
+          </a>
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/purview/purview" target="_blank">
+            <div class="resource-icon">📖</div>
+            <div class="resource-text">
+              <div class="resource-name">Microsoft Purview Official Docs — Overview</div>
+              <div class="resource-desc">FREE · Quick read for how Microsoft describes the platform itself</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">💡</div>
+        <div>Purview is new territory even for Security+ holders — invest extra time here. Know: Purview = compliance + data governance. Compliance Manager = tracks your compliance posture. Service Trust Portal = Microsoft's audit reports for customers.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 10 -->
+  <div class="day-card" onclick="toggle(this)">
+    <div class="day-header">
+      <div class="day-num w2-color">D10</div>
+      <div class="day-meta">
+        <div class="day-title">eDiscovery, Audit, Records &amp; Insider Risk</div>
+        <div class="day-tags">
+          <span class="tag tag-domain">Domain 4: Compliance</span>
+          <span class="tag tag-time">1.5 hrs</span>
+          <span class="tag tag-type">Learn + Cheat Sheet</span>
+        </div>
+      </div>
+      <div class="day-chevron">▶</div>
+    </div>
+    <div class="day-body">
+      <div class="sessions">
+        <div class="session">
+          <div class="session-label">Session A · 45 min</div>
+          <div class="session-title">eDiscovery &amp; Audit Capabilities</div>
+          <ul>
+            <li>Microsoft Purview eDiscovery (Content Search, Standard, Premium)</li>
+            <li>Microsoft Purview Audit (Standard vs. Premium)</li>
+            <li>Records management in Purview</li>
+            <li>Legal hold and preservation concepts</li>
+          </ul>
+        </div>
+        <div class="session">
+          <div class="session-label">Session B · 45 min</div>
+          <div class="session-title">Insider Risk &amp; Communication Compliance</div>
+          <ul>
+            <li>Microsoft Purview Insider Risk Management — purpose and use cases</li>
+            <li>Communication compliance policies</li>
+            <li>Privacy management in Purview</li>
+            <li>Build your full Purview product cheat sheet (parallel to Defender map)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="resources-section">
+        <div class="resources-label">🔗 Resources</div>
+        <div class="resources-list">
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/training/paths/describe-capabilities-of-microsoft-compliance-solutions/" target="_blank">
+            <div class="resource-icon">📘</div>
+            <div class="resource-text">
+              <div class="resource-name">Microsoft Learn — Part 4 continued (eDiscovery, Audit, Insider Risk)</div>
+              <div class="resource-desc">FREE · Continue the compliance path from Day 9</div>
+            </div>
+          </a>
+          <a class="resource-link" href="https://vladtalkstech.com/sc-900-study-guide-microsoft-security-compliance-and-identity-fundamentals-certification/" target="_blank">
+            <div class="resource-icon">📝</div>
+            <div class="resource-text">
+              <div class="resource-name">Vlad Talks Tech — SC-900 Study Guide (2026)</div>
+              <div class="resource-desc">FREE · Curated resource list; great for compliance topics and finding gaps</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 11 -->
+  <div class="day-card" onclick="toggle(this)">
+    <div class="day-header">
+      <div class="day-num w2-color">D11</div>
+      <div class="day-meta">
+        <div class="day-title">Domain 3 Deep Dive — Defender for Cloud &amp; Cloud Security</div>
+        <div class="day-tags">
+          <span class="tag tag-domain">Domain 3: Security Solutions</span>
+          <span class="tag tag-time">1.5 hrs</span>
+          <span class="tag tag-type">Review + Targeted Study</span>
+        </div>
+      </div>
+      <div class="day-chevron">▶</div>
+    </div>
+    <div class="day-body">
+      <div class="sessions">
+        <div class="session">
+          <div class="session-label">Session A · 45 min</div>
+          <div class="session-title">Defender for Cloud — Deep Dive</div>
+          <ul>
+            <li>CSPM vs. CWP (Cloud Workload Protection) within Defender for Cloud</li>
+            <li>Defender for Cloud Apps (CASB) — shadow IT, app connectors</li>
+            <li>Microsoft Defender for DevOps</li>
+            <li>Secure Score vs. Compliance Score — know the difference</li>
+          </ul>
+        </div>
+        <div class="session">
+          <div class="session-label">Session B · 45 min</div>
+          <div class="session-title">Domain 3 Weak Spot Review</div>
+          <ul>
+            <li>Review your wrong answers from Day 7 practice assessment — filter for Domain 3</li>
+            <li>Re-read any Microsoft Learn modules you felt weak on</li>
+            <li>Test yourself: name all Defender products and what each protects</li>
+          </ul>
+        </div>
+      </div>
+      <div class="resources-section">
+        <div class="resources-label">🔗 Resources</div>
+        <div class="resources-list">
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/training/paths/describe-capabilities-of-microsoft-security-solutions/" target="_blank">
+            <div class="resource-icon">📘</div>
+            <div class="resource-text">
+              <div class="resource-name">Microsoft Learn — Security Solutions (revisit weak modules)</div>
+              <div class="resource-desc">FREE · Return to specific modules based on Day 7 practice test gaps</div>
+            </div>
+          </a>
+          <a class="resource-link" href="https://www.youtube.com/results?search_query=SC-900+Defender+for+Cloud+study" target="_blank">
+            <div class="resource-icon">▶️</div>
+            <div class="resource-text">
+              <div class="resource-name">YouTube — Defender for Cloud SC-900 explainers</div>
+              <div class="resource-desc">FREE · 10–15 min videos to reinforce Defender for Cloud concepts</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 12 -->
+  <div class="day-card" onclick="toggle(this)">
+    <div class="day-header">
+      <div class="day-num w2-color">D12</div>
+      <div class="day-meta">
+        <div class="day-title">Full Domain Review — Cheat Sheets &amp; GRC Lens</div>
+        <div class="day-tags">
+          <span class="tag tag-domain">All Domains</span>
+          <span class="tag tag-time">1.5 hrs</span>
+          <span class="tag tag-type">Synthesis + GRC Context</span>
+        </div>
+      </div>
+      <div class="day-chevron">▶</div>
+    </div>
+    <div class="day-body">
+      <div class="sessions">
+        <div class="session">
+          <div class="session-label">Session A · 45 min</div>
+          <div class="session-title">Finalize Your Master Cheat Sheets</div>
+          <ul>
+            <li>Defender product map (complete all entries)</li>
+            <li>Purview product map (all compliance capabilities)</li>
+            <li>Entra capabilities summary</li>
+            <li>Key vocabulary: SIEM, SOAR, CASB, XDR, CIEM, PIM, SSPR</li>
+          </ul>
+        </div>
+        <div class="session">
+          <div class="session-label">Session B · 45 min</div>
+          <div class="session-title">GRC Career Context (Bonus Framing)</div>
+          <ul>
+            <li>How Purview maps to GRC functions (compliance tracking, data classification)</li>
+            <li>How Compliance Manager maps to audit/control frameworks</li>
+            <li>Service Trust Portal as a resource for GRC professionals</li>
+            <li>How SC-900 strengthens your CGRC candidacy later in 2026</li>
+          </ul>
+        </div>
+      </div>
+      <div class="resources-section">
+        <div class="resources-label">🔗 Resources</div>
+        <div class="resources-list">
+          <a class="resource-link" href="https://servicetrust.microsoft.com/" target="_blank">
+            <div class="resource-icon">🏛️</div>
+            <div class="resource-text">
+              <div class="resource-name">Microsoft Service Trust Portal</div>
+              <div class="resource-desc">FREE · Browse the actual portal — knowing how to navigate it may be tested</div>
+            </div>
+          </a>
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/purview/purview-compliance-portal" target="_blank">
+            <div class="resource-icon">📖</div>
+            <div class="resource-text">
+              <div class="resource-name">Microsoft Purview Compliance Portal — Docs</div>
+              <div class="resource-desc">FREE · Quick orientation to the Compliance Manager interface</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">💡</div>
+        <div>For your CGRC path, note how Compliance Manager tracks controls against frameworks like NIST, ISO 27001, and FedRAMP. This is your first real hands-on GRC tooling exposure — worth extra attention.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 13 -->
+  <div class="day-card" onclick="toggle(this)">
+    <div class="day-header">
+      <div class="day-num w2-color">D13</div>
+      <div class="day-meta">
+        <div class="day-title">Practice Exam Blitz — Identify &amp; Eliminate Gaps</div>
+        <div class="day-tags">
+          <span class="tag tag-domain">All Domains</span>
+          <span class="tag tag-time">2 hrs</span>
+          <span class="tag tag-type">Practice Tests</span>
+        </div>
+      </div>
+      <div class="day-chevron">▶</div>
+    </div>
+    <div class="day-body">
+      <div class="sessions">
+        <div class="session">
+          <div class="session-label">Session A · 60 min</div>
+          <div class="session-title">Official Practice Assessment Round 2 + Analysis</div>
+          <ul>
+            <li>Retake the Microsoft official practice assessment</li>
+            <li>Track score vs. Round 1 — you should see improvement</li>
+            <li>Carefully read every explanation again (different questions may appear)</li>
+            <li>Re-flag any topics still showing as weak</li>
+          </ul>
+        </div>
+        <div class="session">
+          <div class="session-label">Session B · 60 min</div>
+          <div class="session-title">Third-Party Practice Questions</div>
+          <ul>
+            <li>Work through 40–50 free practice questions from a third-party source</li>
+            <li>Focus on scenario-based questions ("A user needs to... what should you use?")</li>
+            <li>Do NOT use brain dumps — they violate Microsoft ToS and won't teach you anything</li>
+          </ul>
+        </div>
+      </div>
+      <div class="resources-section">
+        <div class="resources-label">🔗 Resources</div>
+        <div class="resources-list">
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/credentials/certifications/security-compliance-and-identity-fundamentals/practice/assessment?assessment-type=practice&assessmentId=11" target="_blank">
+            <div class="resource-icon">🧪</div>
+            <div class="resource-text">
+              <div class="resource-name">Microsoft Official Practice Assessment (Round 2)</div>
+              <div class="resource-desc">FREE · Most important practice resource — do this first</div>
+            </div>
+          </a>
+          <a class="resource-link" href="https://www.whizlabs.com/microsoft-security-compliance-and-identity-fundamentals-sc-900/" target="_blank">
+            <div class="resource-icon">📝</div>
+            <div class="resource-text">
+              <div class="resource-name">Whizlabs SC-900 Practice Tests</div>
+              <div class="resource-desc">PAID (~$10) · Good scenario-based questions; use for additional drilling</div>
+            </div>
+          </a>
+          <a class="resource-link" href="https://www.examtopics.com/exams/microsoft/sc-900/" target="_blank">
+            <div class="resource-icon">📝</div>
+            <div class="resource-text">
+              <div class="resource-name">ExamTopics SC-900 (Community discussions)</div>
+              <div class="resource-desc">FREE tier available · Use discussions to understand WHY answers are correct — not for memorizing</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 14 -->
+  <div class="day-card" onclick="toggle(this)">
+    <div class="day-header">
+      <div class="day-num w2-color">D14</div>
+      <div class="day-meta">
+        <div class="day-title">Final Review &amp; Exam Day Prep</div>
+        <div class="day-tags">
+          <span class="tag tag-domain">All Domains</span>
+          <span class="tag tag-time">1.5 hrs</span>
+          <span class="tag tag-type">Light Review + Rest</span>
+        </div>
+      </div>
+      <div class="day-chevron">▶</div>
+    </div>
+    <div class="day-body">
+      <div class="sessions">
+        <div class="session">
+          <div class="session-label">Session A · 60 min</div>
+          <div class="session-title">Final Cheat Sheet Review Only</div>
+          <ul>
+            <li>Review your Defender product map — no new studying</li>
+            <li>Review your Purview product map</li>
+            <li>Review your Entra summary</li>
+            <li>Skim your flagged wrong answers from Day 13</li>
+          </ul>
+        </div>
+        <div class="session">
+          <div class="session-label">Session B · 30 min</div>
+          <div class="session-title">Exam Logistics &amp; Mental Prep</div>
+          <ul>
+            <li>Confirm exam appointment (Pearson VUE) and test environment check</li>
+            <li>Review exam format: ~60 questions, 45 min, passing score 700/1000</li>
+            <li>Read-flag-return strategy for uncertain questions</li>
+            <li>Rest — you've put in the work. Trust it.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="resources-section">
+        <div class="resources-label">🔗 Resources</div>
+        <div class="resources-list">
+          <a class="resource-link" href="https://home.pearsonvue.com/microsoft" target="_blank">
+            <div class="resource-icon">🖥️</div>
+            <div class="resource-text">
+              <div class="resource-name">Pearson VUE — Microsoft Exam Scheduling</div>
+              <div class="resource-desc">Register at home or at a test center. Run the system check if testing from home.</div>
+            </div>
+          </a>
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/credentials/certifications/security-compliance-and-identity-fundamentals/" target="_blank">
+            <div class="resource-icon">🏆</div>
+            <div class="resource-text">
+              <div class="resource-name">SC-900 Certification Page — Schedule &amp; Details</div>
+              <div class="resource-desc">FREE · Official Microsoft certification page with exam scheduling link</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">💡</div>
+        <div>You passed Security+ at 794. This exam is fundamentals-level and significantly more conceptual. If you've done the work, you're ready. No cramming tonight — go for a trail run instead. 🏔️</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<div class="footer">
+  <span>SC-900 · 20-Hour Study Plan · Built for Bryan's CC + Security+ background</span>
+  <span>Exam target: Early April 2026</span>
+</div>
+
+<script>
+  function toggle(card) {
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
